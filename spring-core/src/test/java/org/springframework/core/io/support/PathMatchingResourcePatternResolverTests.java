@@ -56,12 +56,21 @@ public class PathMatchingResourcePatternResolverTests {
 
 	private PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
-
+	/**
+	 * 格式不合法
+	 * @throws IOException
+	 */
 	@Test(expected = FileNotFoundException.class)
 	public void invalidPrefixWithPatternElementInIt() throws IOException {
 		resolver.getResources("xx**:**/*.xy");
 	}
 
+	/**
+	 * 最后调用的是
+	 * DefaultResourceLoader 类的 getResourceByPath(String path)
+	 * 然后调用 ClassPathContextResource(path, getClassLoader())
+	 * @throws IOException
+	 */
 	@Test
 	public void singleResourceOnFileSystem() throws IOException {
 		Resource[] resources =
