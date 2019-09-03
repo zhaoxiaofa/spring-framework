@@ -4,7 +4,7 @@ import org.junit.Test;
 
 /**
  * @desc: ResourceLoader测试
- * @Author: zhaoyuan
+ * @Author: zhaoxiaofa
  * @Date: 2019-08-29 10:57
  */
 public class DefaultResourceLoaderTest {

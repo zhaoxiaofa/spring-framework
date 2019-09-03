@@ -79,6 +79,10 @@ public class PathMatchingResourcePatternResolverTests {
 		assertProtocolAndFilenames(resources, "file", "PathMatchingResourcePatternResolverTests.class");
 	}
 
+	/**
+	 * getResourceLoader().getResource(locationPattern) 最终还是调用的 DefaultResourceLoader 和上面一样
+	 * @throws IOException
+	 */
 	@Test
 	public void singleResourceInJar() throws IOException {
 		Resource[] resources = resolver.getResources("org/reactivestreams/Publisher.class");
@@ -115,6 +119,32 @@ public class PathMatchingResourcePatternResolverTests {
 		assertProtocolAndFilenames(resources, "jar", CLASSES_IN_REACTIVESTREAMS);
 	}
 
+	/**
+	 * 自定义单元测试,classpath*: 开头,但是不含统配符
+	 * 最后进入 findAllClassPathResources() 然后执行 doFindAllClassPathResources()
+	 * @throws IOException
+	 */
+	@Test
+	public void classpathStartWithOutPatternInJar() throws IOException {
+		Resource[] resources = resolver.getResources("classpath*:org/");
+		for (Resource resource : resources) {
+			System.out.println(resource.getURL().getProtocol() + "-" + resource.getURL().getPath());
+		}
+	}
+
+	/**
+	 * doFindAllClassPathResources() 执行 addAllClassLoaderJarRoots()
+	 * @throws IOException
+	 */
+	@Test
+	public void classpathStartWithOutPatternAndPathIsNullInJar() throws IOException {
+		Resource[] resources = resolver.getResources("classpath*:");
+		for (Resource resource : resources) {
+			System.out.println(resource.getURL().getProtocol() + "-" + resource.getURL().getPath());
+		}
+	}
+
+
 	@Test
 	public void rootPatternRetrievalInJarFiles() throws IOException {
 		Resource[] resources = resolver.getResources("classpath*:*.dtd");
@@ -130,24 +160,6 @@ public class PathMatchingResourcePatternResolverTests {
 
 	private void assertProtocolAndFilenames(Resource[] resources, String protocol, String... filenames)
 			throws IOException {
-
-		// Uncomment the following if you encounter problems with matching against the file system
-		// It shows file locations.
-//		String[] actualNames = new String[resources.length];
-//		for (int i = 0; i < resources.length; i++) {
-//			actualNames[i] = resources[i].getFilename();
-//		}
-//		List sortedActualNames = new LinkedList(Arrays.asList(actualNames));
-//		List expectedNames = new LinkedList(Arrays.asList(fileNames));
-//		Collections.sort(sortedActualNames);
-//		Collections.sort(expectedNames);
-//
-//		System.out.println("-----------");
-//		System.out.println("Expected: " + StringUtils.collectionToCommaDelimitedString(expectedNames));
-//		System.out.println("Actual: " + StringUtils.collectionToCommaDelimitedString(sortedActualNames));
-//		for (int i = 0; i < resources.length; i++) {
-//			System.out.println(resources[i]);
-//		}
 
 		assertEquals("Correct number of files found", filenames.length, resources.length);
 		for (Resource resource : resources) {
