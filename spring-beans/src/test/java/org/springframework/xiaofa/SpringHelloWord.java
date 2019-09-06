@@ -7,7 +7,18 @@ package org.springframework.xiaofa;
  */
 public class SpringHelloWord {
 
+	private String testKey;
+
 	public String helloWorld(){
+
 		return "hello world";
+	}
+
+	public String getTestKey() {
+		return testKey;
+	}
+
+	public void setTestKey(String testKey) {
+		this.testKey = testKey;
 	}
 }
