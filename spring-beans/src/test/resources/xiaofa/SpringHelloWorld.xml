@@ -5,6 +5,8 @@
 
 	<bean id="springHelloWorld" class="org.springframework.xiaofa.SpringHelloWord">
 		<meta key="testKey" value="testValue"/>
+		<property name="testKey" value="testKey"/>
+		<property name="testKey1" value="testKey1"/>
 	</bean>
 
 </beans>
