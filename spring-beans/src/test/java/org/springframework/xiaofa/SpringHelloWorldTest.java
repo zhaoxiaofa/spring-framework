@@ -5,6 +5,9 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.DefaultResourceLoader;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @desc:
  * @Author: zhaoxiaofa
@@ -19,13 +22,14 @@ public class SpringHelloWorldTest {
 		SpringHelloWord springHelloWorld = (SpringHelloWord) beanFactory.getBean("springHelloWorld");
 		String result = springHelloWorld.helloWorld();
 		System.out.println(result);
+		beanFactory.getBean("springHelloWorld");
 	}
 
 	@Test
 	public void testSpringHelloWorldWithName() {
 
 		BeanFactory beanFactory = new XmlBeanFactory(new DefaultResourceLoader().getResource("xiaofa/SpringHelloWorldWithName.xml"));
-		SpringHelloWord springHelloWorld = (SpringHelloWord) beanFactory.getBean("springHelloWorld");
+		SpringHelloWord springHelloWorld = (SpringHelloWord) beanFactory.getBean("hello");
 		String result = springHelloWorld.helloWorld();
 		System.out.println(result);
 	}
@@ -48,6 +52,11 @@ public class SpringHelloWorldTest {
 		SpringHelloWord springHelloWorld = (SpringHelloWord) beanFactory.getBean("org.springframework.xiaofa.SpringHelloWord");
 		String result = springHelloWorld.helloWorld();
 		System.out.println(result);
+
+
+		List<String> list = new ArrayList<>();
+		list.add("test");
+
 	}
 
 }

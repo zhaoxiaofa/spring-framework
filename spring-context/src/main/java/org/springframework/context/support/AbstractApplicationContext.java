@@ -559,7 +559,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 					logger.warn("Exception encountered during context initialization - " +
 							"cancelling refresh attempt: " + ex);
 				}
-
+				// 出现异常后，destroy之前加载的bean 取消refresh
 				// Destroy already created singletons to avoid dangling resources.
 				destroyBeans();
 
